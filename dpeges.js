@@ -1,21 +1,20 @@
 function DPE(options) {
-	if (!(this instanceof arguments.callee)) {
-		return new arguments.callee(arguments);
-	}
+    if (!(this instanceof arguments.callee)) return new arguments.callee(arguments);
 
-	var self = this;
-	self.width = options.width;
+    var self = this;
+    self.width = options.width;
 	self.height = options.height;
 
 	self.value = options.value;
 	self.shadow = options.shadow || false;
 
-	self.header = options.header;  // "Logement économe"
-	self.footer = options.footer;  // "Logement énergivore"
+    /* TODO : manage header & footer
+     self.header = options.header;  // "Logement économe"
+     self.footer = options.footer;  // "Logement énergivore"
+     */
+    self.options = options;
 
-	self.options = options;
-
-	self.container = document.getElementById(self.options.domID);
+    self.container = document.getElementById(self.options.domID);
 	while (self.container.firstChild) {
 		self.container.removeChild(self.container.firstChild);
 	}
@@ -47,9 +46,9 @@ function DPE(options) {
 
 		if (self.value > 450)
 			self.score = 6;
-	}
+    };
 
-	self.color = [
+    self.color = [
 		"#319834",
 		"#33cc31",
 		"#cbfc34",
@@ -66,8 +65,8 @@ function DPE(options) {
 		"151 à 230",
 		"231 à 330",
 		"331 à 450",
-		"> 450",
-	];
+        "> 450"
+    ];
 
 	self.letter = [
 		"A",
