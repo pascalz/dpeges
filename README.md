@@ -9,3 +9,5 @@ Create an SVG graphic for DPE and GES diagnostics.
 Full Javascript, no need jQuery or RaphaelJS
   
 demo on : http://www.pascalz.com/devs/dpeges/demo
+
+**BOWER** : `$ bower install dpeges`
