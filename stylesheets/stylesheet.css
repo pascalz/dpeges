@@ -426,7 +426,7 @@ th {
 
 
 /* Style */
-
+html,
 body {
   font-size: 15px;
   font-family: Arial, Arial, Helvetica, sans-serif;
@@ -447,7 +447,7 @@ a:hover {
 }
 
 h1.title {
-  margin: 30px 20px 10px;
+  margin: 0 20px 10px;
   font-size: 60px;
   font-weight: bold;
   font-style: italic;
@@ -456,7 +456,7 @@ h1.title {
 }
 
 .wrapper {
-  width: 675px;
+  width: 1024px;
   margin: 0 auto;
 }
 
@@ -716,6 +716,7 @@ footer .owner img {
 
 footer .owner p {
   font-family:Georgia, serif;
+  margin: 15px 0;
 }
 
 footer .owner p a {
