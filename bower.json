@@ -2,7 +2,7 @@
   "name": "dpeges",
   "description": "Create an SVG graphic for DPE and GES diagnostics.",
   "main": "dpeges.js",
-  "version": "0.0.1",
+  "version": "0.0.1-rc1",
   "homepage": "https://github.com/Pascalz/dpeges",
   "authors": [
     "Pascalz <pascal@pascalz.com> (http://www.pascalz.com)"
