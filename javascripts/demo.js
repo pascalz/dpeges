@@ -8,7 +8,7 @@
 			$scope.shadow = true;
 
 			$scope.drawDPE = function() {
-				$scope.code = $scope.getCode(); //prettyPrintOne($scope.getCode());
+				$scope.code = prettyPrintOne($scope.getCode());
 				var d = new DPE({
 					domID: 'dpe',
 					width: $scope.width,
@@ -16,11 +16,11 @@
 					shadow: $scope.shadow,
 					value: $scope.value
 				});
-			}
+			};
 
 			$scope.to_trusted = function(htmlCode) {
 				return $sce.trustAsHtml(htmlCode);
-			}
+			};
 
 			$scope.getCode = function() {
 				return "var dpe = new DPE({\r\n    domID: 'dpe',\r\n    width: " +
@@ -31,10 +31,10 @@
 					"\r\n});";
 			};
 
-			$scope.code = $scope.getCode();//prettyPrintOne($scope.getCode());
+			$scope.code = prettyPrintOne($scope.getCode());
 
 			$scope.$watchCollection("[value, width, height]", function (newVals, oldVals, scope) {
-				scope.code = $scope.getCode(); //prettyPrintOne(scope.getCode());
+				scope.code = prettyPrintOne(scope.getCode());
 				scope.drawDPE();
 			});
 		}
@@ -48,7 +48,7 @@
 			$scope.shadow = false;
 
 			$scope.drawGES = function() {
-				$scope.code = $scope.getCode(); //prettyPrintOne($scope.getCode());
+				$scope.code = prettyPrintOne($scope.getCode());
 				var g = new GES({
 					domID: 'ges',
 					width: $scope.width,
@@ -56,11 +56,11 @@
 					shadow: $scope.shadow,
 					value: $scope.value
 				});
-			}
+			};
 
 			$scope.to_trusted = function(htmlCode) {
 				return $sce.trustAsHtml(htmlCode);
-			}
+			};
 
 			$scope.getCode = function() {
 				return "var ges = new GES({\r\n    domID: 'ges',\r\n    width: " +
@@ -71,10 +71,10 @@
 					"\r\n});";
 			};
 
-			$scope.code = $scope.getCode(); //prettyPrintOne($scope.getCode());
+			$scope.code = prettyPrintOne($scope.getCode());
 
 			$scope.$watchCollection("[value, width, height]", function (newVals, oldVals, scope) {
-				scope.code = $scope.getCode(); //prettyPrintOne(scope.getCode());
+				scope.code = prettyPrintOne(scope.getCode());
 				scope.drawGES();
 			});
 		}

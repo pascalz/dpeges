@@ -965,3 +965,15 @@ footer .owner p a {
 .highlight .vg { color: #008080 } /* Name.Variable.Global */
 .highlight .vi { color: #008080 } /* Name.Variable.Instance */
 .highlight .il { color: #009999 } /* Literal.Number.Integer.Long */
+
+.md-whiteframe-z2 {
+  padding: 20px;
+}
+
+.lines {
+  display: none;
+}
+
+.code-bloc {
+  padding: 20px;
+}
