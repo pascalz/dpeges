@@ -14,13 +14,13 @@
         header: '',
         footer: '',
         valuesRange: [
-          { min: null, max: 50, color: '#319834' },
-          { min: 51, max: 90, color: '#33cc31' },
-          { min: 91, max: 150, color: '#cbfc34' },
-          { min: 151, max: 230, color: '#fbfe06' },
-          { min: 231, max: 330, color: '#fbcc05' },
-          { min: 331, max: 450, color: '#fc9935' },
-          { min: 451, max: null, color: '#fc0205' }
+          { min: null, max: 50, color: '#319834', textColor: '#000000', label: 'A' },
+          { min: 51, max: 90, color: '#33cc31', textColor: '#000000', label: 'B' },
+          { min: 91, max: 150, color: '#cbfc34', textColor: '#000000', label: 'C' },
+          { min: 151, max: 230, color: '#fbfe06', textColor: '#000000', label: 'D' },
+          { min: 231, max: 330, color: '#fbcc05', textColor: '#000000', label: 'E' },
+          { min: 331, max: 450, color: '#fc9935', textColor: '#000000', label: 'F' },
+          { min: 451, max: null, color: '#fc0205', textColor: '#ffffff', label: 'G' }
         ],
         shadow: false,
         lang: 'fr',
@@ -61,6 +61,8 @@
 
         self.values = [];
         self.colors = [];
+        self.textColors = [];
+        self.labels = [];
 
         var toTxt = " à ";
         switch (self.lang) {
@@ -80,6 +82,8 @@
             self.values.push("> " + (value.min - 1));
           }
           self.colors.push(value.color);
+          self.textColors.push(value.textColor);
+          self.labels.push(value.label);
         });
       };
 
@@ -105,9 +109,7 @@
         } catch (e) {
           //
         }
-      };
-
-      self.letter = ["A", "B", "C", "D", "E", "F", "G"];
+      };      
 
       self.setAttributes = function (elem, o) {
         if (o.fill) {
@@ -179,17 +181,17 @@
         var defs = document.createElementNS(svgNS, "defs");
         var filter = document.createElementNS(svgNS, "filter");
         filter.setAttribute("id", "fs");
-        filter.setAttribute("height", "120%");
+        //filter.setAttribute("height", "120%");
 
         var feGaussianBlur = document.createElementNS(svgNS, "feGaussianBlur");
         feGaussianBlur.setAttribute("in", "SourceAlpha");
-        feGaussianBlur.setAttribute("stdDeviation", "3");
+        feGaussianBlur.setAttribute("stdDeviation", "1");
         filter.appendChild(feGaussianBlur);
 
         var feOffset = document.createElementNS(svgNS, "feOffset");
         feOffset.setAttribute("result", "offsetblur");
-        feOffset.setAttribute("dx", "2");
-        feOffset.setAttribute("dy", "2");
+        feOffset.setAttribute("dx", "1");
+        feOffset.setAttribute("dy", "0.5");
         filter.appendChild(feOffset);
 
         var feMerge = document.createElementNS(svgNS, "feMerge");
@@ -201,14 +203,16 @@
         filter.appendChild(feMerge);
         defs.appendChild(filter);
         svg.appendChild(defs);
+        
+        var countElem = self.values.length;
 
-        var blocHeight = (self.height - (8 * self.pad)) / 7;
+        var blocHeight = (self.height - ((countElem + 1) * self.pad)) / countElem;
         var blocWidth = (self.width - (2 * self.pad)) - 45;
 
-        var blocPart = ((blocWidth / 3) * 2) / 6;
+        var blocPart = ((blocWidth / 3) * 2) / (countElem - 1);
         blocWidth = (blocWidth / 3);
 
-        for (var i = 0; i < 7; i++) {
+        for (var i = 0; i < countElem; i++) {
           var x, y, x1, y1, x2, y2, poly;
           x = self.pad;
           y = ((i * self.pad) + self.pad) + (i * blocHeight);
@@ -282,7 +286,7 @@
             {
               x: x1 - self.pad,
               y: y + (blocHeight * 0.8),
-              text: self.letter[i],
+              text: self.labels[i],
               options: {
                 fill: i > whiteIdx ? '#ffffff' : '#000000',
                 fontSize: blocHeight * 0.8,
@@ -314,13 +318,13 @@
     function DPE(options) {
 
       options.valuesRange = [
-        { min: null, max: 50, color: '#319834' },
-        { min: 51, max: 90, color: '#33cc31' },
-        { min: 91, max: 150, color: '#cbfc34' },
-        { min: 151, max: 230, color: '#fbfe06' },
-        { min: 231, max: 330, color: '#fbcc05' },
-        { min: 331, max: 450, color: '#fc9935' },
-        { min: 451, max: null, color: '#fc0205' }
+        { min: null, max: 50, color: '#319834', textColor: '#000000', label: 'A' },
+        { min: 51, max: 90, color: '#33cc31', textColor: '#000000', label: 'B' },
+        { min: 91, max: 150, color: '#cbfc34', textColor: '#000000', label: 'C' },
+        { min: 151, max: 230, color: '#fbfe06', textColor: '#000000', label: 'D' },
+        { min: 231, max: 330, color: '#fbcc05', textColor: '#000000', label: 'E' },
+        { min: 331, max: 450, color: '#fc9935', textColor: '#000000', label: 'F' },
+        { min: 451, max: null, color: '#fc0205', textColor: '#ffffff', label: 'G' }
       ];
 
       options.shape = "sharp";
@@ -331,13 +335,13 @@
     function GES(options) {
 
       options.valuesRange = [
-        { min: null, max: 5, color: '#f2eff4' },
-        { min: 6, max: 10, color: '#dfc1f7' },
-        { min: 11, max: 20, color: '#d6aaf4' },
-        { min: 21, max: 35, color: '#cc93f4' },
-        { min: 36, max: 55, color: '#bb72f3' },
-        { min: 56, max: 80, color: '#a94cee' },
-        { min: 81, max: null, color: '#8b1ae1' }
+        { min: null, max: 5, color: '#f2eff4', textColor: '#000000', label: 'A' },
+        { min: 6, max: 10, color: '#dfc1f7', textColor: '#000000', label: 'B' },
+        { min: 11, max: 20, color: '#d6aaf4', textColor: '#000000', label: 'C' },
+        { min: 21, max: 35, color: '#cc93f4', textColor: '#000000', label: 'D' },
+        { min: 36, max: 55, color: '#bb72f3', textColor: '#ffffff', label: 'E' },
+        { min: 56, max: 80, color: '#a94cee', textColor: '#ffffff', label: 'F' },
+        { min: 81, max: null, color: '#8b1ae1', textColor: '#ffffff', label: 'G' }
       ];
 
       options.shape = "flat";
