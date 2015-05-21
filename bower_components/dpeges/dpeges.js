@@ -1,167 +1,201 @@
-function Diag(options) {
+//(function () {
 
-    "use strict";
+  "use strict";
 
-    var self = this;
-    self.width = options.width;
-    self.height = options.height;
+    function Diag(options) {
 
-    self.value = options.value;
-    self.shadow = options.shadow || false;
+      var self = this;
+        
+      // Default options is DPE
+      var defaultOptions = {
+        width: 250,
+        height: 200,
+        value: 200,
+        header: '',
+        footer: '',
+        valuesRange: [
+          { min: null, max: 50, color: '#319834' },
+          { min: 51, max: 90, color: '#33cc31' },
+          { min: 91, max: 150, color: '#cbfc34' },
+          { min: 151, max: 230, color: '#fbfe06' },
+          { min: 231, max: 330, color: '#fbcc05' },
+          { min: 331, max: 450, color: '#fc9935' },
+          { min: 451, max: null, color: '#fc0205' }
+        ],
+        shadow: false,
+        lang: 'fr',
+        pad: 5,
+        shape: 'sharp',
+        domId: undefined
+      };
 
-    /* TODO : manage header & footer
-     self.header = options.header; //"Faible émission de GES"
-     self.footer = options.footer; //"Forte émission de GES"
-     */
+      self.width = options.width || defaultOptions.width;
+      self.height = options.height || defaultOptions.height;
 
-    self.options = options;
-    self.lang = options.lang || "fr";
-    self.pad = options.pad || 5;
-    self.svgNS = "http://www.w3.org/2000/svg";
+      self.value = options.value || defaultOptions.value;
+      self.shadow = options.shadow || defaultOptions.shadow;
 
-    self.container = document.getElementById(self.options.domID);
-    while (self.container.firstChild) {
+      self.header = options.header || defaultOptions.header;
+      self.footer = options.footer || defaultOptions.footer;
+         
+      //self.options = options;
+      self.lang = options.lang || defaultOptions.lang;
+      self.pad = options.pad || defaultOptions.pad;
+      self.shape = options.shape || defaultOptions.shape;
+
+      self.domId = options.domId || defaultOptions.domId;
+
+      var svgNS = "http://www.w3.org/2000/svg";
+
+      self.container = document.getElementById(self.domId);
+        
+      // Empty container
+      while (self.container.firstChild) {
         self.container.removeChild(self.container.firstChild);
-    }
+      }
 
-    self.score = -1;
+      self.score = -1;
 
-    self.color = self.options.color;
+      // Get texts and colors for each value in valuesRange
+      self.getValuesDatas = function () {
 
-    self.getValuesText = function () {
         self.values = [];
+        self.colors = [];
+
         var toTxt = " à ";
         switch (self.lang) {
-            case "fr":
-                toTxt = " à ";
-                break;
-            case "en":
-                toTxt = " to ";
-                break;
+          case "fr":
+            toTxt = " à ";
+            break;
+          case "en":
+            toTxt = " to ";
+            break;
         }
-        self.options.valuesRange.forEach(function (values) {
-            if (values.min === null && values.max !== null) {
-                self.values.push("≤ " + values.max);
-            } else if (values.min !== null && values.max !== null) {
-                self.values.push(values.min + toTxt + values.max);
-            } else if (values.min !== null && values.max === null) {
-                self.values.push("> " + (values.min - 1));
-            }
+        options.valuesRange.forEach(function (value) {
+          if (value.min === null && value.max !== null) {
+            self.values.push("≤ " + value.max);
+          } else if (value.min !== null && value.max !== null) {
+            self.values.push(value.min + toTxt + value.max);
+          } else if (value.min !== null && value.max === null) {
+            self.values.push("> " + (value.min - 1));
+          }
+          self.colors.push(value.color);
         });
-    };
+      };
 
-    self.getScore = function () {
+
+      self.getScore = function () {
         try {
-            self.options.valuesRange.forEach(function (values) {
-                self.score++;
-                if (values.min === null && values.max !== null) {
-                    if (self.value <= values.max) {
-                        throw {};
-                    }
-                } else if (values.min !== null && values.max !== null) {
-                    if (self.value >= values.min && self.value <= values.max) {
-                        throw {};
-                    }
-                } else if (values.min !== null && values.max === null) {
-                    if (self.value >= values.min) {
-                        throw {};
-                    }
-                }
-            });
+          options.valuesRange.forEach(function (values) {
+            self.score++;
+            if (values.min === null && values.max !== null) {
+              if (self.value <= values.max) {
+                throw {};
+              }
+            } else if (values.min !== null && values.max !== null) {
+              if (self.value >= values.min && self.value <= values.max) {
+                throw {};
+              }
+            } else if (values.min !== null && values.max === null) {
+              if (self.value >= values.min) {
+                throw {};
+              }
+            }
+          });
         } catch (e) {
-            //
+          //
         }
-    };
+      };
 
-    self.letter = ["A", "B", "C", "D", "E", "F", "G"];
+      self.letter = ["A", "B", "C", "D", "E", "F", "G"];
 
-    self.setAttributes = function (elem, options) {
-        if (options.fill) {
-            elem.setAttribute("fill", options.fill);
+      self.setAttributes = function (elem, o) {
+        if (o.fill) {
+          elem.setAttribute("fill", o.fill);
         }
-        if (options.fontSize) {
-            elem.setAttribute("font-size", options.fontSize);
+        if (o.fontSize) {
+          elem.setAttribute("font-size", o.fontSize);
         }
-        if (options.fontFamily) {
-            elem.setAttribute("font-family", options.fontFamily);
+        if (o.fontFamily) {
+          elem.setAttribute("font-family", o.fontFamily);
         }
-        if (options.textAnchor) {
-            elem.setAttribute("text-anchor", options.textAnchor);
+        if (o.textAnchor) {
+          elem.setAttribute("text-anchor", o.textAnchor);
         }
-        if (options.fontWeight) {
-            elem.setAttribute("font-weight", options.fontWeight);
+        if (o.fontWeight) {
+          elem.setAttribute("font-weight", o.fontWeight);
         }
-        if (options.strokeWidth) {
-            elem.setAttribute("stroke-width", options.strokeWidth);
+        if (o.strokeWidth) {
+          elem.setAttribute("stroke-width", o.strokeWidth);
         }
-        if (options.stroke) {
-            elem.setAttribute("stroke", options.stroke);
+        if (o.stroke) {
+          elem.setAttribute("stroke", o.stroke);
         }
-        if (options.opacity) {
-            elem.setAttribute("opacity", options.opacity);
+        if (o.opacity) {
+          elem.setAttribute("opacity", o.opacity);
         }
-    };
+      };
 
-    self.getPath = function (path, options) {
-        var elem = document.createElementNS(self.svgNS, "path");
+      self.getPath = function (path, options) {
+        var elem = document.createElementNS(svgNS, "path");
         self.setAttributes(elem, options);
 
         elem.setAttribute("d", path);
 
         return elem;
-    };
+      };
 
-    self.getPolygon = function (points, color) {
-        var elem = document.createElementNS(self.svgNS, "polygon");
+      self.getPolygon = function (points, color) {
+        var elem = document.createElementNS(svgNS, "polygon");
         elem.setAttribute("style", "fill-opacity: 1;fill: " + color + ";stroke: #000000;" + (self.shadow ? "filter:url(#fs)" : ""));
         elem.setAttribute("points", points);
 
         return elem;
-    };
+      };
 
-    self.getText = function (text) {
-        var elem = document.createElementNS(self.svgNS, "text");
+      self.getText = function (text) {
+        var elem = document.createElementNS(svgNS, "text");
         elem.setAttribute("x", text.x);
         elem.setAttribute("y", text.y);
         elem.textContent = text.text;
         self.setAttributes(elem, text.options);
         return elem;
-    };
+      };
 
-    self.createSVG = function () {
+      self.createSVG = function () {
         self.getScore();
-        self.getValuesText();
+        self.getValuesDatas();
 
-        var svg = document.createElementNS(self.svgNS, "svg");
+        var svg = document.createElementNS(svgNS, "svg");
         svg.setAttribute("style", "overflow: hidden; position: relative;");
         svg.setAttribute("width", self.width);
         svg.setAttribute("height", self.height);
         svg.setAttribute("version", "1.1");
         svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
 
-        var desc = document.createElementNS(self.svgNS, "desc");
-        desc.textContent = 'Created by Pascalz (http://www.pascalz.com/dev/dpeges)';
+        var desc = document.createElementNS(svgNS, "desc");
+        desc.textContent = 'Created by Pascalz (http://pascalz.github.io/dpeges/)';
         svg.appendChild(desc);
-        var defs = document.createElementNS(self.svgNS, "defs");
-        var filter = document.createElementNS(self.svgNS, "filter");
+        var defs = document.createElementNS(svgNS, "defs");
+        var filter = document.createElementNS(svgNS, "filter");
         filter.setAttribute("id", "fs");
         filter.setAttribute("height", "120%");
 
-        var feGaussianBlur = document.createElementNS(self.svgNS, "feGaussianBlur");
+        var feGaussianBlur = document.createElementNS(svgNS, "feGaussianBlur");
         feGaussianBlur.setAttribute("in", "SourceAlpha");
         feGaussianBlur.setAttribute("stdDeviation", "3");
         filter.appendChild(feGaussianBlur);
 
-        var feOffset = document.createElementNS(self.svgNS, "feOffset");
+        var feOffset = document.createElementNS(svgNS, "feOffset");
         feOffset.setAttribute("result", "offsetblur");
         feOffset.setAttribute("dx", "2");
         feOffset.setAttribute("dy", "2");
         filter.appendChild(feOffset);
 
-        var feMerge = document.createElementNS(self.svgNS, "feMerge");
-        var feMergeNode1 = document.createElementNS(self.svgNS, "feMergeNode");
+        var feMerge = document.createElementNS(svgNS, "feMerge");
+        var feMergeNode1 = document.createElementNS(svgNS, "feMergeNode");
         feMerge.appendChild(feMergeNode1);
-        var feMergeNode2 = document.createElementNS(self.svgNS, "feMergeNode");
+        var feMergeNode2 = document.createElementNS(svgNS, "feMergeNode");
         feMergeNode2.setAttribute("in", "SourceGraphic");
         feMerge.appendChild(feMergeNode2);
         filter.appendChild(feMerge);
@@ -175,160 +209,140 @@ function Diag(options) {
         blocWidth = (blocWidth / 3);
 
         for (var i = 0; i < 7; i++) {
-            var x, y, x1, y1, x2, y2, poly;
-            x = self.pad;
-            y = ((i * self.pad) + self.pad) + (i * blocHeight);
+          var x, y, x1, y1, x2, y2, poly;
+          x = self.pad;
+          y = ((i * self.pad) + self.pad) + (i * blocHeight);
 
-            switch (self.options.shape) {
-                case "sharp":
-                    x1 = ((blocWidth + (blocPart * i)) - (blocHeight / 2));
+          switch (self.shape) {
+            case "sharp":
+              x1 = ((blocWidth + (blocPart * i)) - (blocHeight / 2));
 
-                    x2 = x + (blocWidth + blocPart * i);
-                    y1 = y + (blocHeight / 2);
+              x2 = x + (blocWidth + blocPart * i);
+              y1 = y + (blocHeight / 2);
 
-                    y2 = y + blocHeight;
-                    poly = x + "," + y + " " +
-                        x1 + "," + y + " " +
-                        x2 + "," + y1 + " " +
-                        x1 + "," + y2 + " " +
-                        x + "," + y2 + " " +
-                        x + "," + y;
-                    break;
-                case "flat":
-                    x1 = x + (blocWidth + blocPart * i);
+              y2 = y + blocHeight;
+              poly = x + "," + y + " " +
+              x1 + "," + y + " " +
+              x2 + "," + y1 + " " +
+              x1 + "," + y2 + " " +
+              x + "," + y2 + " " +
+              x + "," + y;
+              break;
+            case "flat":
+              x1 = x + (blocWidth + blocPart * i);
 
-                    y1 = y + blocHeight;
-                    poly = x + "," + y + " " +
-                        x1 + "," + y + " " +
-                        x1 + "," + y1 + " " +
-                        x + "," + y1 + " " +
-                        x + "," + y;
-                    break;
-            }
+              y1 = y + blocHeight;
+              poly = x + "," + y + " " +
+              x1 + "," + y + " " +
+              x1 + "," + y1 + " " +
+              x + "," + y1 + " " +
+              x + "," + y;
+              break;
+          }
 
-            if (self.score === i) {
-                var sx1 = x - 2;
-                var sx2 = (self.width - (2 * self.pad)) + 2;
-                var sy1 = y - 2;
-                var sy2 = y + blocHeight + 3;
+          if (self.score === i) {
+            var sx1 = x - 2;
+            var sx2 = (self.width - (2 * self.pad)) + 2;
+            var sy1 = y - 2;
+            var sy2 = y + blocHeight + 3;
 
-                var scorePath = "M " + sx1 + " " + sy1 +
-                    "L" + sx2 + " " + sy1 +
-                    "L" + sx2 + " " + sy2 +
-                    "L" + sx1 + " " + sy2 + " Z";
-                svg.appendChild(self.getPath(scorePath,
-                    {
-                        'stroke': '#5b5b5b',
-                        'strokeWidth': 1,
-                        'fill': "#ffffff",
-                        'fillOpacity': 0.8
-                    }));
-
-                svg.appendChild(self.getText(
-                    {
-                        x: sx2 - 5,
-                        y: y + blocHeight * 0.9,
-                        text: self.value,
-                        options: {
-                            'fill': '#000000',
-                            'fontSize': blocHeight * 0.9,
-                            'fontWeight': 'bold',
-                            'fontFamily': "'Arial Narrow', sans-serif",
-                            'textAnchor': 'end'
-                        }
-                    }
-                ));
-            }
-
-            svg.appendChild(self.getPolygon(poly, self.color[i]));
-
-            var whiteIdx = (self.options.shape === "sharp") ? 5 : 3;
+            var scorePath = "M " + sx1 + " " + sy1 +
+              "L" + sx2 + " " + sy1 +
+              "L" + sx2 + " " + sy2 +
+              "L" + sx1 + " " + sy2 + " Z";
+            svg.appendChild(self.getPath(scorePath,
+              {
+                'stroke': '#5b5b5b',
+                'strokeWidth': 1,
+                'fill': "#ffffff",
+                'fillOpacity': 0.8
+              }));
 
             svg.appendChild(self.getText(
-                {
-                    x: x1 - self.pad,
-                    y: y + (blocHeight * 0.8),
-                    text: self.letter[i],
-                    options: {
-                        fill: i > whiteIdx ? '#ffffff' : '#000000',
-                        fontSize: blocHeight * 0.8,
-                        fontWeight: 'bold',
-                        fontFamily: "'Arial Narrow', sans-serif",
-                        textAnchor: 'end'
-                    }
-                }));
-            svg.appendChild(self.getText(
-                {
-                    x: x + self.pad,
-                    y: y + blocHeight - ((blocHeight * 0.6) / 2),
-                    text: self.values[i],
-                    options: {
-                        fill: i > whiteIdx ? '#ffffff' : '#000000',
-                        fontSize: blocHeight * 0.6,
-                        fontFamily: "'Arial Narrow', sans-serif",
-                        textAnchor: 'start'
-                    }
-                }));
+              {
+                x: sx2 - 5,
+                y: y + blocHeight * 0.9,
+                text: self.value,
+                options: {
+                  'fill': '#000000',
+                  'fontSize': blocHeight * 0.9,
+                  'fontWeight': 'bold',
+                  'fontFamily': "'Arial Narrow', sans-serif",
+                  'textAnchor': 'end'
+                }
+              }
+              ));
+          }
+
+          svg.appendChild(self.getPolygon(poly, self.colors[i]));
+
+          var whiteIdx = (self.shape === "sharp") ? 5 : 3;
+
+          svg.appendChild(self.getText(
+            {
+              x: x1 - self.pad,
+              y: y + (blocHeight * 0.8),
+              text: self.letter[i],
+              options: {
+                fill: i > whiteIdx ? '#ffffff' : '#000000',
+                fontSize: blocHeight * 0.8,
+                fontWeight: 'bold',
+                fontFamily: "'Arial Narrow', sans-serif",
+                textAnchor: 'end'
+              }
+            }));
+          svg.appendChild(self.getText(
+            {
+              x: x + self.pad,
+              y: y + blocHeight - ((blocHeight * 0.6) / 2),
+              text: self.values[i],
+              options: {
+                fill: i > whiteIdx ? '#ffffff' : '#000000',
+                fontSize: blocHeight * 0.6,
+                fontFamily: "'Arial Narrow', sans-serif",
+                textAnchor: 'start'
+              }
+            }));
         }
 
         self.container.appendChild(svg);
+      };
+
+      self.createSVG();
     };
 
-    self.createSVG();
-};
+    function DPE(options) {
 
-function DPE(options) {
+      options.valuesRange = [
+        { min: null, max: 50, color: '#319834' },
+        { min: 51, max: 90, color: '#33cc31' },
+        { min: 91, max: 150, color: '#cbfc34' },
+        { min: 151, max: 230, color: '#fbfe06' },
+        { min: 231, max: 330, color: '#fbcc05' },
+        { min: 331, max: 450, color: '#fc9935' },
+        { min: 451, max: null, color: '#fc0205' }
+      ];
 
-    "use strict";
+      options.shape = "sharp";
 
-    options.valuesRange = [
-        { min: null, max: 50 },
-        { min: 51, max: 90 },
-        { min: 91, max: 150 },
-        { min: 151, max: 230 },
-        { min: 231, max: 330 },
-        { min: 331, max: 450 },
-        { min: 451, max: null }
-    ];
+      return new Diag(options);
+    };
 
-    options.color = [
-        "#319834",
-        "#33cc31",
-        "#cbfc34",
-        "#fbfe06",
-        "#fbcc05",
-        "#fc9935",
-        "#fc0205"
-    ];
-    options.shape = "sharp";
+    function GES(options) {
 
-    return new Diag(options);
-};
+      options.valuesRange = [
+        { min: null, max: 5, color: '#f2eff4' },
+        { min: 6, max: 10, color: '#dfc1f7' },
+        { min: 11, max: 20, color: '#d6aaf4' },
+        { min: 21, max: 35, color: '#cc93f4' },
+        { min: 36, max: 55, color: '#bb72f3' },
+        { min: 56, max: 80, color: '#a94cee' },
+        { min: 81, max: null, color: '#8b1ae1' }
+      ];
 
-function GES(options) {
+      options.shape = "flat";
 
-    "use strict";
+      return new Diag(options);
+    };
 
-    options.valuesRange = [
-        { min: null, max: 5 },
-        { min: 6, max: 10 },
-        { min: 11, max: 20 },
-        { min: 21, max: 35 },
-        { min: 36, max: 55 },
-        { min: 56, max: 80 },
-        { min: 81, max: null }
-    ];
-
-    options.color = [
-        "#f2eff4",
-        "#dfc1f7",
-        "#d6aaf4",
-        "#cc93f4",
-        "#bb72f3",
-        "#a94cee",
-        "#8b1ae1"
-    ];
-    options.shape = "flat";
-
-    return new Diag(options);
-};
+//})();

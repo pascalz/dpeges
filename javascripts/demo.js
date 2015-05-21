@@ -9,8 +9,8 @@
 
 			$scope.drawDPE = function() {
 				$scope.code = prettyPrintOne($scope.getCode());
-				var d = new DPE({
-					domID: 'dpe',
+				DPE({
+					domId: 'dpe',
 					width: $scope.width,
 					height: $scope.height,
 					shadow: $scope.shadow,
@@ -49,8 +49,8 @@
 
 			$scope.drawGES = function() {
 				$scope.code = prettyPrintOne($scope.getCode());
-				var g = new GES({
-					domID: 'ges',
+				GES({
+					domId: 'ges',
 					width: $scope.width,
 					height: $scope.height,
 					shadow: $scope.shadow,
