@@ -26,7 +26,7 @@
 			};
 
 			$scope.getCode = function() {
-				return "var dpe = new DPE({\r\n    domID: 'dpe',\r\n    width: " +
+				return "var dpeges = new DpeGes();\r\ndpeges.dpe({\r\n    domID: 'dpe',\r\n    width: " +
 					$scope.width + ",\r\n    height: " +
 					$scope.height + ",\r\n    value: " +
 					$scope.value +
@@ -66,7 +66,7 @@
 			};
 
 			$scope.getCode = function() {
-				return "var ges = new GES({\r\n    domID: 'ges',\r\n    width: " +
+				return "var dpeges = new DpeGes();\r\ndpeges.ges({\r\n    domID: 'ges',\r\n    width: " +
 					$scope.width + ",\r\n    height: " +
 					$scope.height + ",\r\n    value: " +
 					$scope.value +
