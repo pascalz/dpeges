@@ -1,4 +1,4 @@
-//(function () {
+var DpeGes = function () {
 
   "use strict";
 
@@ -348,5 +348,10 @@
 
       return new Diag(options);
     };
+    
+    return {
+      dpe: DPE,
+      ges: GES
+    };
 
-//})();
+};
