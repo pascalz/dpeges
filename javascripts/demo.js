@@ -1,4 +1,7 @@
-(function(module) {
+/* global prettyPrintOne */
+/* global angular */
+/* global DpeGes */
+(function(module, dpeges) {
 	
 	module.controller('dpeCtrl', [
 		"$scope", '$sce', function($scope, $sce) {
@@ -9,7 +12,7 @@
 
 			$scope.drawDPE = function() {
 				$scope.code = prettyPrintOne($scope.getCode());
-				DPE({
+				dpeges.dpe({
 					domId: 'dpe',
 					width: $scope.width,
 					height: $scope.height,
@@ -49,7 +52,7 @@
 
 			$scope.drawGES = function() {
 				$scope.code = prettyPrintOne($scope.getCode());
-				GES({
+				dpeges.ges({
 					domId: 'ges',
 					width: $scope.width,
 					height: $scope.height,
@@ -80,4 +83,4 @@
 		}
 	]);
 
-}(angular.module("app")));
+}(angular.module("app"), DpeGes()));

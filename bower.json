@@ -16,6 +16,6 @@
     "angular-material": "~0.9.4",
     "bootstrap": "~3.3.4",
     "google-code-prettify": "~1.0.4",
-    "dpeges": "^0.0.1-rc2"
+    "dpeges": "^0.0.1-rc3"
   }
 }

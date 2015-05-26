@@ -1,7 +1,7 @@
 DPE-GES
 =======
 
-active version: 0.0.1-rc1
+active version: 0.0.1-rc3
 
 **DPE** : Diagnostic de performance énergétique  (Energy Performance Diagnostic)  
 **GES** : Gaz à effet de serre  (Greenhouse Gas Emissions)  
