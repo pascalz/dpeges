@@ -92,7 +92,11 @@ var DpeGes = function () {
         try {
           options.valuesRange.forEach(function (values) {
             self.score++;
-            if (values.min === null && values.max !== null) {
+            if (typeof self.value === 'string') {
+              if (self.value === values.label) {
+                throw {};
+              }
+            } else if (values.min === null && values.max !== null) {
               if (self.value <= values.max) {
                 throw {};
               }
