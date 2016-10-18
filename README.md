@@ -1,3 +1,5 @@
+[![GitHub version](https://badge.fury.io/gh/pascalz%2Fdpeges.svg)](https://badge.fury.io/gh/pascalz%2Fdpeges)
+
 # DPE-GES
 
 A pure javascript utility to generate an SVG graph for DPE and GES diagnostics.
