@@ -12,10 +12,14 @@
     "ges"
   ],
   "license": "MIT",
-  "dependencies": {
-    "angular-material": "~0.9.4",
-    "bootstrap": "~3.3.4",
-    "google-code-prettify": "~1.0.4",
-    "dpeges": "0.0.4"
+  "devDependencies": {
+    "angular": "1.5.8",
+    "jquery": "3.1.1",
+    "angular-material": "0.9.8",
+    "bootstrap": "3.3.7",
+    "google-code-prettify": "1.0.5",
+    "dpeges": "0.0.4",
+    "angular-animate": "^1.5.8",
+    "angular-aria": "^1.5.8"
   }
 }
