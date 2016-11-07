@@ -1,6 +1,6 @@
 {
   "name": "dpeges",
-  "version": "0.0.1-rc1",
+  "version": "0.0.4",
   "homepage": "https://github.com/Pascalz/dpeges",
   "authors": [
     "(Pascalz) <pascal@pascalz.com>"
@@ -16,6 +16,6 @@
     "angular-material": "~0.9.4",
     "bootstrap": "~3.3.4",
     "google-code-prettify": "~1.0.4",
-    "dpeges": "^0.0.1-rc3"
+    "dpeges": "0.0.4"
   }
 }
