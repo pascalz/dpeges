@@ -25,7 +25,7 @@ $ bower install dpeges
   <head>
     <meta charset="utf-8">
     <title>GES/DPE basic example</title>
-  <head>
+  </head>
   <body>
     <div id="dpe"></div>
     <div id="ges"></div>
