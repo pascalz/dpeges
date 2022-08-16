@@ -14,13 +14,13 @@ var DpeGes = function () {
         header: '',
         footer: '',
         valuesRange: [
-          { min: null, max: 50, color: '#319834', textColor: '#000000', label: 'A' },
-          { min: 51, max: 90, color: '#33cc31', textColor: '#000000', label: 'B' },
-          { min: 91, max: 150, color: '#cbfc34', textColor: '#000000', label: 'C' },
-          { min: 151, max: 230, color: '#fbfe06', textColor: '#000000', label: 'D' },
-          { min: 231, max: 330, color: '#fbcc05', textColor: '#000000', label: 'E' },
-          { min: 331, max: 450, color: '#fc9935', textColor: '#000000', label: 'F' },
-          { min: 451, max: null, color: '#fc0205', textColor: '#ffffff', label: 'G' }
+          { min: null, max: 70, color: '#319834', textColor: '#000000', label: 'A' },
+          { min: 71, max: 110, color: '#33cc31', textColor: '#000000', label: 'B' },
+          { min: 111, max: 180, color: '#cbfc34', textColor: '#000000', label: 'C' },
+          { min: 181, max: 250, color: '#fbfe06', textColor: '#000000', label: 'D' },
+          { min: 251, max: 330, color: '#fbcc05', textColor: '#000000', label: 'E' },
+          { min: 331, max: 420, color: '#fc9935', textColor: '#000000', label: 'F' },
+          { min: 421, max: null, color: '#fc0205', textColor: '#ffffff', label: 'G' }
         ],
         shadow: false,
         lang: 'fr',
@@ -323,13 +323,13 @@ var DpeGes = function () {
     function DPE(options) {
 
       options.valuesRange = [
-        { min: null, max: 50, color: '#319834', textColor: '#000000', label: 'A' },
-        { min: 51, max: 90, color: '#33cc31', textColor: '#000000', label: 'B' },
-        { min: 91, max: 150, color: '#cbfc34', textColor: '#000000', label: 'C' },
-        { min: 151, max: 230, color: '#fbfe06', textColor: '#000000', label: 'D' },
-        { min: 231, max: 330, color: '#fbcc05', textColor: '#000000', label: 'E' },
-        { min: 331, max: 450, color: '#fc9935', textColor: '#000000', label: 'F' },
-        { min: 451, max: null, color: '#fc0205', textColor: '#ffffff', label: 'G' }
+        { min: null, max: 70, color: '#319834', textColor: '#000000', label: 'A' },
+        { min: 71, max: 110, color: '#33cc31', textColor: '#000000', label: 'B' },
+        { min: 111, max: 180, color: '#cbfc34', textColor: '#000000', label: 'C' },
+        { min: 181, max: 250, color: '#fbfe06', textColor: '#000000', label: 'D' },
+        { min: 251, max: 330, color: '#fbcc05', textColor: '#000000', label: 'E' },
+        { min: 331, max: 420, color: '#fc9935', textColor: '#000000', label: 'F' },
+        { min: 421, max: null, color: '#fc0205', textColor: '#ffffff', label: 'G' }
       ];
 
       options.shape = "sharp";
